@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wordpress-analyser"
+version = "0.1.0"
+description = "WordPress theme and plugin analyser — hooks, template hierarchy, plugin API signals"
+authors = [{name = "Michael Borck", email = "michael.borck@curtin.edu.au"}]
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "rich>=13.7.0",
+]
+
+[project.scripts]
+wordpress-analyser = "wordpress_analyser.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wordpress_analyser"]
