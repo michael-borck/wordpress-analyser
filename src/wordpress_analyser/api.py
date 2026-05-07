@@ -1,3 +1,4 @@
+from importlib.metadata import version
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import tempfile
 import shutil
@@ -6,7 +7,7 @@ from pathlib import Path
 from .core import analyse_file
 from .models import WordPressAnalysisResult
 
-app = FastAPI(title="wordpress-analyser", version="0.2.0")
+app = FastAPI(title="wordpress-analyser", version=version("wordpress-analyser"))
 
 
 @app.get("/health")
