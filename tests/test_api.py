@@ -8,7 +8,9 @@ client = TestClient(app)
 def test_health():
     response = client.get("/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
+    body = response.json()
+    assert body["status"] == "ok"
+    assert "version" in body
 
 
 def test_analyse_plugin(plugin_file):
@@ -19,8 +21,9 @@ def test_analyse_plugin(plugin_file):
         )
     assert response.status_code == 200
     data = response.json()
-    assert "action_count" in data
-    assert data["action_count"] >= 2
+    assert data["action_count"] == 2
+    assert data["filter_count"] == 2
+    assert data["detected_type"] == "plugin"
 
 
 def test_analyse_non_php():
@@ -29,3 +32,4 @@ def test_analyse_non_php():
         files={"file": ("notes.txt", b"some content", "text/plain")},
     )
     assert response.status_code == 400
+    assert ".php" in response.json()["detail"]

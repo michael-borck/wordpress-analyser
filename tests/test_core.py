@@ -11,9 +11,9 @@ def test_plugin_detected(plugin_file):
 def test_hook_counts(plugin_file):
     result = analyse_file(plugin_file)
     # add_action('init', ...) + do_action('my_plugin_loaded') = 2
-    assert result.action_count >= 2
+    assert result.action_count == 2
     # add_filter('the_content', ...) + apply_filters('my_plugin_value', ...) = 2
-    assert result.filter_count >= 2
+    assert result.filter_count == 2
 
 
 def test_shortcode_detected(plugin_file):
@@ -28,22 +28,24 @@ def test_post_type_detected(plugin_file):
 
 def test_nonce_check_detected(plugin_file):
     result = analyse_file(plugin_file)
-    assert result.nonce_checks >= 1
+    assert result.nonce_checks == 1
 
 
 def test_output_escaping_detected(plugin_file):
     result = analyse_file(plugin_file)
-    assert result.output_escaping >= 1
+    # esc_html(...) + esc_attr(...) = 2
+    assert result.output_escaping == 2
 
 
 def test_class_count(plugin_file):
     result = analyse_file(plugin_file)
-    assert result.class_count >= 1
+    assert result.class_count == 1
 
 
 def test_function_count(plugin_file):
     result = analyse_file(plugin_file)
-    assert result.function_count >= 1
+    # function my_init_function() + public function run() = 2
+    assert result.function_count == 2
 
 
 def test_template_detected(template_file):
@@ -67,4 +69,5 @@ def test_non_php_file(tmp_path):
 def test_unique_hooks(plugin_file):
     result = analyse_file(plugin_file)
     assert isinstance(result.unique_hooks, list)
-    assert len(result.unique_hooks) >= 1
+    # init, the_content, my_plugin_loaded, my_plugin_value = 4 unique hooks
+    assert len(result.unique_hooks) == 4

@@ -12,7 +12,7 @@ app = FastAPI(title="wordpress-analyser", version=version("wordpress-analyser"))
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "version": version("wordpress-analyser")}
 
 
 @app.post("/analyse", response_model=WordPressAnalysisResult)
