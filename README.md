@@ -1,6 +1,6 @@
 # wordpress-analyser
 
-WordPress theme and plugin analyser — part of the analyser family.
+WordPress theme and plugin analyser — part of the [analyser family](https://github.com/michael-borck/lens-analysers).
 
 Analyses WordPress themes and plugins for hook/filter architecture, template hierarchy compliance, plugin API usage, `wp_enqueue` discipline, and child theme structure.
 
