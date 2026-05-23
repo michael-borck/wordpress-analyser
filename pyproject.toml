@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "wordpress-analyser"
-version = "0.2.2"
+version = "0.3.0"
 description = "WordPress theme and plugin analyser — hooks, template hierarchy, plugin API signals"
 authors = [{name = "Michael Borck", email = "michael.borck@curtin.edu.au"}]
 readme = "README.md"

@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 from .core import analyse_file
+from .manifest import MANIFEST
 from .models import WordPressAnalysisResult
 
 app = FastAPI(title="wordpress-analyser", version=version("wordpress-analyser"))
@@ -13,6 +14,11 @@ app = FastAPI(title="wordpress-analyser", version=version("wordpress-analyser"))
 @app.get("/health")
 def health():
     return {"status": "ok", "version": version("wordpress-analyser")}
+
+
+@app.get("/manifest")
+def manifest():
+    return MANIFEST
 
 
 @app.post("/analyse", response_model=WordPressAnalysisResult)
