@@ -1,29 +1,25 @@
-from importlib.metadata import version
-from fastapi import FastAPI, UploadFile, File, HTTPException
-import tempfile
 import shutil
+import tempfile
 from pathlib import Path
+
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from lens_contract import add_contract_routes, add_cors
 
 from .core import analyse_file
 from .manifest import MANIFEST
 from .models import WordPressAnalysisResult
 
-app = FastAPI(title="wordpress-analyser", version=version("wordpress-analyser"))
+app = FastAPI(title="wordpress-analyser", version=MANIFEST["version"])
 
-
-@app.get("/health")
-def health():
-    return {"status": "ok", "version": version("wordpress-analyser")}
-
-
-@app.get("/manifest")
-def manifest():
-    return MANIFEST
+# GET /health and GET /manifest (the family contract, via lens-contract).
+add_contract_routes(app, MANIFEST)
+# CORS — env-driven: WORDPRESS_ANALYSER_MODE=desktop (Electron) or WORDPRESS_ANALYSER_ALLOWED_ORIGINS.
+add_cors(app, env_prefix="WORDPRESS_ANALYSER")
 
 
 @app.post("/analyse", response_model=WordPressAnalysisResult)
 async def analyse(file: UploadFile = File(...)):
-    if not file.filename.endswith(".php"):
+    if not (file.filename or "").endswith(".php"):
         raise HTTPException(status_code=400, detail="Only .php files are supported")
     tmp_dir = Path(tempfile.mkdtemp())
     try:
