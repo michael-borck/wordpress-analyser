@@ -4,7 +4,7 @@ WordPress theme and plugin analyser — part of the [analyser family](https://gi
 
 Analyses WordPress themes and plugins for hook/filter architecture, template hierarchy compliance, plugin API usage, `wp_enqueue` discipline, and child theme structure.
 
-**Status:** Coming soon. Name reserved.
+**Status:** Available on PyPI.
 
 ## Installation
 
